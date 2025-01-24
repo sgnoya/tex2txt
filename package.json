@@ -1,0 +1,177 @@
+{
+  "name": "tex2txt",
+  "displayName": "Tex2Txt",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "TeX to TXT Converter Settings",
+      "properties": {
+        "texToTxtConverter.removableSurroundings": {
+          "type": "array",
+          "default": [
+            [
+              "\\\\begin{comment}",
+              "\\\\end{comment}"
+            ],
+            [
+              "\\\\iffalse",
+              "\\\\fi"
+            ],
+            [
+              "\\\\if0",
+              "\\\\fi"
+            ],
+            [
+              "\\\\if\\s*0",
+              "\\\\fi"
+            ]
+          ],
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": "Specify the LaTeX command name to remove the contents."
+        },
+        "texToTxtConverter.contentExtractionEnvironments": {
+          "type": "array",
+          "default": [
+            "document",
+            "abstract",
+            "itemize",
+            "enumerate"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "Specify the LaTeX environment name to keep the contents (e.g., document, abstract, title)."
+        },
+        "texToTxtConverter.formulaPlaceholder": {
+          "type": "string",
+          "default": "[FORMULA]",
+          "description": "Equation blocks."
+        },
+        "texToTxtConverter.formulaPatterns": {
+          "type": "array",
+          "default": [
+            "\\\\\\((.*?)\\\\\\)",
+            "\\\\\\[.*?\\\\\\]",
+            "\\$\\$(.*?)\\$\\$",
+            "\\$(.*?)\\$",
+            "\\\\begin{equation}(.*?)\\\\end{equation}",
+            "\\\\begin{equation\\*}(.*?)\\\\end{equation\\*}",
+            "\\\\begin{align}(.*?)\\\\end{align}",
+            "\\\\begin{align\\*}(.*?)\\\\end{align\\*}",
+            "\\\\begin{eqnarray}(.*?)\\\\end{eqnarray}",
+            "\\\\begin{eqnarray\\*}(.*?)\\\\end{eqnarray\\*}"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "Specify the pattern that surrounds the formula with a regular expression. Multiple patterns can be set."
+        },
+        "texToTxtConverter.latexCommandReplacements": {
+          "type": "object",
+          "default": {
+            "cite": "[CITATION]",
+            "ref": "[REFERENCE]",
+            "label": "[LABEL]",
+            "eqref": "[EQUATION]",
+            "url": "[URL]"
+          },
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Set the LaTeX command and the string to replace it with."
+        },
+        "texToTxtConverter.removableEnvironments": {
+          "type": "array",
+          "default": [
+            "figure",
+            "table",
+            "figure\\*",
+            "table\\*"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "Specify the LaTeX environment name to remove while keeping contents of the captionCommand."
+        },
+        "texToTxtConverter.captionCommands": {
+          "type": "array",
+          "default": [
+            "caption",
+            "subcaption"
+          ],
+          "description": "Specify the LaTeX command name to keep the contents (e.g., caption) in the removableEnvironments."
+        },
+        "texToTxtConverter.contentExtractionCommands": {
+          "type": "array",
+          "default": [
+            "section",
+            "subsection",
+            "subsubsection",
+            "footnote",
+            "title",
+            "bf",
+            "it",
+            "emph",
+            "rm",
+            "tt",
+            "textbf",
+            "textit",
+            "texttt",
+            "textrm",
+            "noindent"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "Specify the LaTeX command name to keep the contents."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "tex2txt.convertTexToTxt",
+        "title": "Tex2Txt: Convert tex to txt"
+      }
+    ]
+  },
+  "activationEvents": [],
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.96.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "eslint": "^9.16.0",
+    "typescript": "^5.7.2",
+    "ts-loader": "^9.5.1",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
+  }
+}
