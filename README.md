@@ -199,7 +199,7 @@ Contributions are welcome! If you encounter any issues or have feature requests,
 
 ## License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+See the `LICENSE` file for details.
 
 
 ## Release Notes
